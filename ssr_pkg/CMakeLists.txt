@@ -23,6 +23,18 @@ ament_target_dependencies(ultra_sound_node
     std_msgs
 )
 
+add_executable(aml_node src/aml_node.cpp)
+
+install(TARGETS
+    aml_node
+    DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_target_dependencies(aml_node
+    rclcpp
+    std_msgs
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
