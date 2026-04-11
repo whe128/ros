@@ -15,14 +15,14 @@ int main(int argc, char const *argv[])
     std_msgs::msg::String msg;
     msg.data = "Hello, I send aml data!";
 
-    rclcpp::Rate loop_rate(10); 
+    rclcpp::Rate loop_rate(4);
 
     while(rclcpp::ok())
     {
         pub->publish(msg);
-        
+
         loop_rate.sleep();
     }
-    
+
     return 0;
 }

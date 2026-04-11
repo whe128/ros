@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.8)     # minimum compiler edition
-project(ssr_pkg)                        # project name
+cmake_minimum_required(VERSION 3.8)
+project(atr_pkg)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -13,25 +13,22 @@ find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 
 # ====== C++ node ======
-add_executable(ultra_sound_node src/ultra_sound_node.cpp)
-add_executable(aml_node src/aml_node.cpp)
-
-ament_target_dependencies(ultra_sound_node rclcpp std_msgs)
-ament_target_dependencies(aml_node rclcpp std_msgs)
+add_executable(motor_node src/motor_node.cpp)
+ament_target_dependencies(motor_node rclcpp std_msgs)
 
 install(TARGETS
-    ultra_sound_node
-    aml_node
+    motor_node
     DESTINATION lib/${PROJECT_NAME}
 )
 
 # ====== Python node ======
 ament_python_install_package(${PROJECT_NAME})
 install(PROGRAMS
-    ssr_pkg/ultra_sound_node.py
-    ssr_pkg/aml_node.py
+    atr_pkg/motor_node.py
     DESTINATION lib/${PROJECT_NAME}
 )
+
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

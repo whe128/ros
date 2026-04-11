@@ -1,6 +1,6 @@
 # ROS2 Workspace Build & Setup Guide
 
-## 📦 Build the Workspace
+### 📦 Build
 
 Run the following command in your workspace root (e.g., `~/ros2_ws`):
 
@@ -8,32 +8,22 @@ Run the following command in your workspace root (e.g., `~/ros2_ws`):
 colcon build --symlink-install
 ```
 
----
-
-## 🔧 Build a Specific Package
-
 To build only one package:
 
 ```bash
-colcon build --packages-select your_package_name
+colcon build --packages-select your_package_name --symlink-install
 ```
 
----
+### 🌱 Source the Environment
 
-## 🌱 Source the Environment
-
-Before using ROS2, you need to source the environment:
-
-### 1. Source ROS2 installation and workspace
+Before using ROS2, you need to source the environment (ros installation and workspace):
 
 ```bash
 source /opt/ros/humble/setup.bash
 source ~/ros2_ws/install/setup.bash
 ```
 
----
-
-## ⚙️ Add to `.bashrc` (Recommended)
+### ⚙️ Add to `.bashrc` (Recommended)
 
 To avoid sourcing every time, add these lines to your `~/.bashrc`:
 
@@ -41,17 +31,16 @@ To avoid sourcing every time, add these lines to your `~/.bashrc`:
 gedit ~/.bashrc
 ```
 
-Append the following:
+### 📦 Create package
 
 ```bash
-source /opt/ros/humble/setup.bash
-source ~/ros2_ws/install/setup.bash
+ros2 pkg create package_name --build-type ament_cmake --dependencies rclcpp rclpy std_msgs
+ros2 pkg create --build-type ament_python package_name --dependencies rclpy std_msgs
 ```
 
-Then apply changes:
+### ⚙️ common command
 
 ```bash
-source ~/.bashrc
+# check the rqt graph
+rqt_graph
 ```
-
----
