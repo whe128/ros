@@ -18,14 +18,13 @@ def main(args=None):
     rclpy.init(args=None)
     node = rclpy.create_node('ultra_sound_node')
 
-    print("Hello World, I am the ultra sound node!\n")
+    print("Hello World, I am the ultra sound node! [Python]\n")
 
     pub = node.create_publisher(String, 'ultra_sound_topic', 10)
 
     rate = node.create_rate(1)  # 1 Hz
 
     while rclpy.ok():
-        rclpy.spin_once(node)
         msg = String()
         msg.data = "Hello, I send ultra sound data!"
         pub.publish(msg)

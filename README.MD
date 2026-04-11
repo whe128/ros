@@ -43,4 +43,7 @@ ros2 pkg create --build-type ament_python package_name --dependencies rclpy std_
 ```bash
 # check the rqt graph
 rqt_graph
+
+# let the py file can run
+chmod +x xx.py
 ```

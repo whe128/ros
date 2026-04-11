@@ -18,14 +18,13 @@ def main(args=None):
     rclpy.init(args=None)
     node = rclpy.create_node('aml_node')
 
-    print("Hello World, I am the aml node!\n")
+    print("Hello World, I am the aml node! [Python]\n")
 
     pub = node.create_publisher(String, 'aml_topic', 10)
 
     rate = node.create_rate(4)  # 4 Hz
 
     while rclpy.ok():
-        rclpy.spin_once(node)
         msg = String()
         msg.data = "Hello, I send aml data!"
         pub.publish(msg)
