@@ -1,3 +1,3 @@
 string grade
-int64 star
+int32 star
 string data

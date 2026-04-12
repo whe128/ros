@@ -14,6 +14,15 @@ Description:
 import rclpy
 from std_msgs.msg import String
 
+pub = None
+
+def timer_callback():
+    global pub
+
+    msg = String()
+    msg.data = "Hello, I send ultra sound data!"
+    pub.publish(msg)
+
 def main(args=None):
     rclpy.init(args=None)
     node = rclpy.create_node('ultra_sound_node')
@@ -22,14 +31,9 @@ def main(args=None):
 
     pub = node.create_publisher(String, 'ultra_sound_topic', 10)
 
-    rate = node.create_rate(1)  # 1 Hz
+    node.create_timer(1.0, timer_callback)
 
-    while rclpy.ok():
-        msg = String()
-        msg.data = "Hello, I send ultra sound data!"
-        pub.publish(msg)
-
-        rate.sleep()
+    rclpy.spin(node)
 
     node.destroy_node()
     rclpy.shutdown()
