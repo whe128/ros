@@ -54,6 +54,7 @@ void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
     double kp = 0.01;
 
     geometry_msgs::msg::Twist cmd_vel;
+    cmd_vel.linear.x = 0.1;
     cmd_vel.angular.z = kp * yaw_error;
     vel_pub->publish(cmd_vel);
 }

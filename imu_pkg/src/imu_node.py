@@ -39,6 +39,8 @@ def imu_callback(msg):
     kp = 0.01
 
     cmd_vel = Twist()
+
+    cmd_vel.linear.x = 0.1
     cmd_vel.angular.z = kp * yaw_error
     vel_pub.publish(cmd_vel)
 
