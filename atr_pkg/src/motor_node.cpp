@@ -3,18 +3,18 @@
 
 rclcpp::Node::SharedPtr node;
 
-void ultra_sound_callback(const std_msgs::msg::String msg)
+void ultra_sound_callback(const std_msgs::msg::String::SharedPtr msg)
 {
     RCLCPP_INFO(node->get_logger(),
                 "I am the motor node and received a message: %s",
-                msg.data.c_str());
+                msg->data.c_str());
 }
 
-void aml_callback(const std_msgs::msg::String msg)
+void aml_callback(const std_msgs::msg::String::SharedPtr msg)
 {
     RCLCPP_WARN(node->get_logger(),
                 "I am the motor node and received a message: %s",
-                msg.data.c_str());
+                msg->data.c_str());
 }
 
 
