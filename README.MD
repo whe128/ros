@@ -46,4 +46,7 @@ rqt_graph
 
 # let the py file can run
 chmod +x xx.py
+
+# check the msg format
+ros2 interface show msg
 ```
