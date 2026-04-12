@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 #conding: utf-8
 
-
 import rclpy
 from custom_msgs.msg import CustomMsg
 

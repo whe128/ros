@@ -2,7 +2,6 @@
 #conding: utf-8
 import rclpy
 from custom_msgs.msg import CustomMsg
-import time
 
 pub = None
 

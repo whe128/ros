@@ -5,7 +5,6 @@ int main(int argc, char const *argv[])
 {
     rclcpp::init(argc, argv);
 
-
     printf("Hello World, I am the custom msg pub node!\n");
 
     rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("custom_msg_pub_node");
