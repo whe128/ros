@@ -2,8 +2,10 @@
 #include <sensor_msgs/msg/imu.hpp>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
+#include <geometry_msgs/msg/twist.hpp>
 
 std::shared_ptr<rclcpp::Node> node;
+std::shared_ptr<rclcpp::Publisher<geometry_msgs::msg::Twist>> vel_pub;
 
 void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
 {
@@ -44,6 +46,16 @@ void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
     RCLCPP_INFO(node->get_logger(),
                 "The orientation of the robot is: roll: %.2f, pitch: %.2f, yaw: %.2f",
                 roll, pitch, yaw);
+
+
+    // course control
+    double target_yaw = 90.0;
+    double yaw_error = target_yaw - yaw;
+    double kp = 0.01;
+
+    geometry_msgs::msg::Twist cmd_vel;
+    cmd_vel.angular.z = kp * yaw_error;
+    vel_pub->publish(cmd_vel);
 }
 
 
@@ -63,6 +75,12 @@ int main(int argc, char *argv[])
         "/imu/data",
         10,
         imu_callback
+    );
+
+    // create publisher
+    vel_pub = node->create_publisher<geometry_msgs::msg::Twist>(
+        "/cmd_vel",
+        10
     );
 
     rclcpp::spin(node);
