@@ -44,6 +44,9 @@ ros2 pkg create --build-type ament_python package_name --dependencies rclpy std_
 # check the rqt graph
 rqt_graph
 
+# check the rqt tf tree
+ros2 run rqt_tf_tree rqt_tf_tree
+
 # let the py file can run
 chmod +x xx.py
 
