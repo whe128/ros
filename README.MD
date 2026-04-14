@@ -47,6 +47,9 @@ rqt_graph
 # check the rqt tf tree
 ros2 run rqt_tf_tree rqt_tf_tree
 
+# dynamically change the config, avoid 
+ros2 run rqt_reconfigure rqt_reconfigure
+
 # let the py file can run
 chmod +x xx.py
 
