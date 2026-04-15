@@ -43,8 +43,6 @@ def main(args=None):
 
     # creat a window
     cv2.namedWindow("RGB")
-    cv2.namedWindow("test")
-
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

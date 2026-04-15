@@ -15,16 +15,20 @@ find_package(sensor_msgs REQUIRED)
 
 # ====== C++ node ======
 add_executable(cv_image_node src/cv_image_node.cpp)
+add_executable(cv_hsv_node src/cv_hsv_node.cpp)
 ament_target_dependencies(cv_image_node rclcpp cv_bridge OpenCV sensor_msgs)
+ament_target_dependencies(cv_hsv_node rclcpp cv_bridge OpenCV sensor_msgs)
 
 install(TARGETS
     cv_image_node
+    cv_hsv_node
     DESTINATION lib/${PROJECT_NAME}
 )
 
 # ====== Python node ======
 install(PROGRAMS
     src/cv_image_node.py
+    src/cv_hsv_node.py
     DESTINATION lib/${PROJECT_NAME}
 )
 
