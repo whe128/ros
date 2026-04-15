@@ -12,19 +12,24 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(nav2_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 
 # ====== C++ node ======
 add_executable(nav_client_node src/nav_client_node.cpp)
+add_executable(wp_node src/wp_node.cpp)
 ament_target_dependencies(nav_client_node rclcpp rclcpp_action nav2_msgs)
+ament_target_dependencies(wp_node rclcpp std_msgs)
 
 install(TARGETS
     nav_client_node
+    wp_node
     DESTINATION lib/${PROJECT_NAME}
 )
 
 # ====== Python node ======
 install(PROGRAMS
     src/nav_client_node.py
+    src/wp_node.py
     DESTINATION lib/${PROJECT_NAME}
 )
 
