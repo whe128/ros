@@ -47,7 +47,7 @@ rqt_graph
 # check the rqt tf tree
 ros2 run rqt_tf_tree rqt_tf_tree
 
-# dynamically change the config, avoid 
+# dynamically change the config, avoid
 ros2 run rqt_reconfigure rqt_reconfigure
 
 # let the py file can run
@@ -55,4 +55,14 @@ chmod +x xx.py
 
 # check the msg format
 ros2 interface show msg
+
+# run the wp_map_tools
+ros2 run wp_map_tools wp_edit_node
+ros2 run wp_map_tools wp_navi_server
+# save config
+ros2 run wp_map_tools wp_saver
+# edit or use tool
+rviz2 -d ~/ros2_ws/install/wp_map_tools/share/wp_map_tools/rviz/edit.rviz
+rviz2 -d ~/ros2_ws/install/wp_map_tools/share/wp_map_tools/rviz/navi.rviz
+
 ```
