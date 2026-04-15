@@ -1,8 +1,9 @@
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/msg/image.hpp>
 #include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/msg/image.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <geometry_msgs/msg/twist.hpp>
 
 // hue
 static int iLowH = 10;
@@ -14,7 +15,9 @@ static int iHighS = 255;
 static int iLowV = 1;
 static int iHighV = 255;
 
-rclcpp::Node::SharedPtr node;
+std::shared_ptr<rclcpp::Node> node;
+geometry_msgs::msg::Twist vel_cmd;
+std::shared_ptr<rclcpp::Publisher<geometry_msgs::msg::Twist>> vel_pub;
 
 void Cam_RGB_Callback(const sensor_msgs::msg::Image::SharedPtr msg)
 {
@@ -99,15 +102,38 @@ void Cam_RGB_Callback(const sensor_msgs::msg::Image::SharedPtr msg)
             cv::Point(nTargetX, nTargetY + 10),
             cv::Scalar(255, 0, 0)
         );
+
+        // control the robot to follow the object
+        int error_x = nImageWidth / 2 - nTargetX;
+        int error_y = nImageHeight / 2 - nTargetY;
+
+        float vel_rotate = error_x * 0.005;
+        float vel_forward = error_y * 0.003;
+
+        vel_cmd.linear.x = vel_forward;
+        vel_cmd.linear.y = 0;
+        vel_cmd.linear.z = 0;
+        vel_cmd.angular.x = 0;
+        vel_cmd.angular.y = 0;
+        vel_cmd.angular.z = vel_rotate;
     }
     else
     {
         printf("No target detected!\n");
+
+        vel_cmd.linear.x = 0;
+        vel_cmd.linear.y = 0;
+        vel_cmd.linear.z = 0;
+        vel_cmd.angular.x = 0;
+        vel_cmd.angular.y = 0;
+        vel_cmd.angular.z = 0;
     }
+
+    vel_pub->publish(vel_cmd);
+    printf("robot velocity: linear.x = %.2f, angular.z = %.2f\n", vel_cmd.linear.x, vel_cmd.angular.z);
 
 
     cv::imshow("RGB", cv_ptr->image);
-    cv::imshow("HSV", imgHSV);
     cv::imshow("Result", imgThresholded);
 
     cv::waitKey(5);
@@ -117,9 +143,14 @@ int main(int argc, char const *argv[])
 {
     rclcpp::init(argc, argv);
 
-    printf("Hello World, I am the cv hsv node!\n");
+    printf("Hello World, I am the cv follow node!\n");
 
-    node = rclcpp::Node::make_shared("cv_hsv_node");
+    node = rclcpp::Node::make_shared("cv_follow_node");
+
+    vel_pub = node->create_publisher<geometry_msgs::msg::Twist>(
+            "/cmd_vel",
+            10
+        );
 
     std::shared_ptr<rclcpp::Subscription<sensor_msgs::msg::Image>> rgb_sub =
         node->create_subscription<sensor_msgs::msg::Image>(
@@ -144,7 +175,6 @@ int main(int argc, char const *argv[])
     cv::createTrackbar("HighV", "Threshold", &iHighV, 255);
 
     cv::namedWindow("RGB");
-    cv::namedWindow("HSV");
     cv::namedWindow("Result");
 
     rclcpp::spin(node);
@@ -153,3 +183,5 @@ int main(int argc, char const *argv[])
     rclcpp::shutdown();
     return 0;
 }
+
+
