@@ -18,14 +18,17 @@ find_package(geometry_msgs REQUIRED)
 add_executable(cv_image_node src/cv_image_node.cpp)
 add_executable(cv_hsv_node src/cv_hsv_node.cpp)
 add_executable(cv_follow_node src/cv_follow_node.cpp)
+add_executable(cv_face_detect_node src/cv_face_detect_node.cpp)
 ament_target_dependencies(cv_image_node rclcpp cv_bridge OpenCV sensor_msgs)
 ament_target_dependencies(cv_hsv_node rclcpp cv_bridge OpenCV sensor_msgs)
 ament_target_dependencies(cv_follow_node rclcpp cv_bridge OpenCV sensor_msgs geometry_msgs)
+ament_target_dependencies(cv_face_detect_node rclcpp cv_bridge OpenCV sensor_msgs )
 
 install(TARGETS
     cv_image_node
     cv_hsv_node
     cv_follow_node
+    cv_face_detect_node
     DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -34,6 +37,7 @@ install(PROGRAMS
     src/cv_image_node.py
     src/cv_hsv_node.py
     src/cv_follow_node.py
+    src/cv_face_detect_node.py
     DESTINATION lib/${PROJECT_NAME}
 )
 

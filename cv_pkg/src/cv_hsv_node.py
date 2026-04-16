@@ -91,15 +91,6 @@ def main(args=None):
     # threshold values for HSV
     cv2.namedWindow("Threshold")
 
-    def on_trackbar(x):
-        global iLowH, iHighH, iLowS, iHighS, iLowV, iHighV
-        iLowH  = cv2.getTrackbarPos("LowH",  "Threshold")
-        iHighH = cv2.getTrackbarPos("HighH", "Threshold")
-        iLowS  = cv2.getTrackbarPos("LowS",  "Threshold")
-        iHighS = cv2.getTrackbarPos("HighS", "Threshold")
-        iLowV  = cv2.getTrackbarPos("LowV",  "Threshold")
-        iHighV = cv2.getTrackbarPos("HighV", "Threshold")
-
     cv2.createTrackbar("LowH", "Threshold", iLowH, 179, lambda x: globals().update(iLowH=x))
     cv2.createTrackbar("HighH", "Threshold", iHighH, 179, lambda x: globals().update(iHighH=x))
 
