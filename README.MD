@@ -61,8 +61,15 @@ ros2 run wp_map_tools wp_edit_node
 ros2 run wp_map_tools wp_navi_server
 # save config
 ros2 run wp_map_tools wp_saver
+# check the topic msg type, publisher and subscriber number
+ros2 topic info "topic name"
+# check the msg structure
+ros2 interface show "msg type name"
 # edit or use tool
 rviz2 -d ~/ros2_ws/install/wp_map_tools/share/wp_map_tools/rviz/edit.rviz
 rviz2 -d ~/ros2_ws/install/wp_map_tools/share/wp_map_tools/rviz/navi.rviz
+
+# edit script for the open of a terminal
+gedit ~/.bashrc
 
 ```
